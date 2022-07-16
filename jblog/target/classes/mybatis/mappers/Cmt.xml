@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CmtXml">
+  
+  <select id="selectCmt" parameterType="String" resultType="CmtList">
+  <![CDATA[
+  	select u.userName, c.cmtContent, to_char(c.regDate,'YYYY/MM/DD') as regDate, c.postNo
+  	from comments c, users u, post p
+  	where u.userNo = c.userNo
+  	and c.postNo = p.postNo
+  	order by regDate desc
+    ]]>
+  </select>
+  
+  <insert id="insertCmt" parameterType="CmtList">
+  	<![CDATA[
+      INSERT INTO comments (cmtno, postno, cmtcontent, regdate, userno )
+      values( seq_comments_no.nextval, 
+          #{postNo},
+          #{cmtContent},
+          sysdate,
+          #{userNo}
+          )
+    ]]>
+  	</insert>
+  	
+  <select id="cmtSelectone" parameterType="String" resultType="CmtList">
+   <![CDATA[
+  	select c.userName, c.cmtContent, to_char(c.regDate,'YYYY/MM/DD') as regDate, p.postNo
+  	from comments c, post p
+  	where p.postNo = c.postNo
+  	order by regDate desc
+    ]]>
+  </select>
+  
+</mapper>

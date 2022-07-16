@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CateXml">
+  
+	<!-- 쿼리문 작성  -->
+  	<select id="selectCategory" parameterType="String" resultType="CategoryList">
+    SELECT *
+    FROM category c , users u 
+    WHERE c.id = u.id
+    AND c.id = #{id}
+    order by regDate desc
+  	</select>
+  	
+  	<insert id="insertCategory" parameterType="CategoryList">
+  	<![CDATA[
+    INSERT INTO category (cateno, id, catename, description, regdate )
+    values( seq_category_no.nextval,
+          #{id},
+          #{cateName},
+          #{description},
+          sysdate
+          )
+    ]]>
+  	</insert>
+  	
+  	<delete id="deleteCategory">
+		delete category where cateno = #{cateNo}
+	</delete>
+
+</mapper>

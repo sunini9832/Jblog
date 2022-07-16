@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UsersXml">
+  
+  <!-- 쿼리문 작성  -->
+  <select id="selectuser" resultType="userlist">
+    select  *
+    from users
+    where id=#{id} and password=#{passWord}
+  </select>
+  
+  <insert id="insertuser" parameterType="userlist">
+	<![CDATA[
+		insert into users (userno,id,username,password,joindate)
+		values(seq_users_no.nextval,#{id},#{userName},#{passWord},sysdate)
+	]]>
+  </insert>
+  
+  <select id="idcheck" resultType="userlist">
+    select id
+    from users
+    where id=#{id}
+  </select>
+
+</mapper>
